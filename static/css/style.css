@@ -1,0 +1,63 @@
+/* ==========================================================================
+   BioSync Pro - Custom Stylesheet
+   ========================================================================== */
+
+/* Custom Scrollbar for a modern web app feel */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f5f9; 
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1; 
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; 
+}
+
+/* Custom Background Tints for Stat Cards */
+.bg-light-primary { 
+    background-color: #e0f2fe !important; 
+    color: #0284c7;
+}
+.bg-light-success { 
+    background-color: #dcfce7 !important; 
+    color: #16a34a;
+}
+.bg-light-danger { 
+    background-color: #fee2e2 !important; 
+    color: #dc2626;
+}
+.bg-light-warning { 
+    background-color: #fef3c7 !important; 
+    color: #d97706;
+}
+
+/* Table Enhancements */
+.table-hover tbody tr {
+    transition: background-color 0.2s ease-in-out;
+}
+.table-hover tbody tr:hover {
+    background-color: #f8fafc;
+    cursor: pointer;
+}
+
+/* Status Badges */
+.badge-outline-success {
+    border: 1px solid #86efac;
+    color: #15803d;
+    background-color: #f0fdf4;
+}
+.badge-outline-danger {
+    border: 1px solid #fca5a5;
+    color: #b91c1c;
+    background-color: #fef2f2;
+}
+
+/* Sidebar Active State Transition */
+#sidebar .nav-link {
+    transition: all 0.2s ease;
+}

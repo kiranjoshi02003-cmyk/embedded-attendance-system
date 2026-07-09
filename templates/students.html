@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold text-dark">Student Management</h2>
+        <p class="text-muted mb-0">View, add, and manage enrolled biometrics</p>
+    </div>
+    <button class="btn btn-success shadow-sm" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+        <i class="fa-solid fa-user-plus me-1"></i> Enroll New Student
+    </button>
+</div>
+
+<div class="card border-0 shadow-sm bg-white">
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Roll Number</th>
+                        <th>Full Name</th>
+                        <th>Department</th>
+                        <th>Fingerprint ID</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.id }}</td>
+                        <td><strong>{{ student.roll_number }}</strong></td>
+                        <td>{{ student.full_name }}</td>
+                        <td><span class="badge bg-light-primary">{{ student.department.name }}</span></td>
+                        <td><code class="text-secondary bg-light px-2 py-1 rounded">ID: {{ student.finger_id }}</code></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">No students found. Enroll a student to get started.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addStudentModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-light border-0">
+                <h5 class="modal-title fw-bold">Enroll Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="enrollForm">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Full Name</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Roll Number</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Department</label>
+                        <select class="form-select" required>
+                            <option value="">Select Department...</option>
+                            {% for dept in departments %}
+                                <option value="{{ dept.id }}">{{ dept.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold text-muted">Assigned Fingerprint ID (From ESP32)</label>
+                        <input type="number" class="form-control" required placeholder="e.g., 1">
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 fw-bold">Save Student Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

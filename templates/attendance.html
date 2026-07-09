@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold text-dark">Attendance Records</h2>
+        <p class="text-muted mb-0">Complete history of biometric verifications</p>
+    </div>
+    <button class="btn btn-outline-secondary bg-white shadow-sm">
+        <i class="fa-solid fa-download me-1"></i> Export to CSV
+    </button>
+</div>
+
+<div class="card border-0 shadow-sm bg-white">
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Student Name</th>
+                        <th>Roll Number</th>
+                        <th>Department</th>
+                        <th>Device Location</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td><strong>{{ record.scan_date.strftime('%Y-%m-%d') }}</strong></td>
+                        <td><i class="fa-regular fa-clock me-1 text-muted"></i> {{ record.scan_time.strftime('%H:%M:%S') }}</td>
+                        <td>{{ record.student.full_name }}</td>
+                        <td>{{ record.student.roll_number }}</td>
+                        <td>{{ record.student.department.name }}</td>
+                        <td><code class="text-secondary bg-light px-2 py-1 rounded">{{ record.device.location or record.device.mac_address }}</code></td>
+                        <td>
+                            {% if record.status == 'Present' %}
+                                <span class="badge badge-outline-success"><i class="fa-solid fa-check me-1"></i>Present</span>
+                            {% else %}
+                                <span class="badge badge-outline-danger">{{ record.status }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">No attendance records found in the database.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

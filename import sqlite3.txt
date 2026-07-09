@@ -1,0 +1,19 @@
+import sqlite3
+
+# Connect to your database
+conn = sqlite3.connect('instance/smart_attendance.db')
+cursor = conn.cursor()
+
+# Insert the device record
+# Note: Ensure this matches the MAC address in your hardware_simulator.py
+query = "INSERT INTO devices (mac_address, location, status) VALUES (?, ?, ?)"
+data = ('AA:BB:CC:DD:EE:FF', 'Main Gate', 'online')
+
+try:
+    cursor.execute(query, data)
+    conn.commit()
+    print("Device added successfully!")
+except sqlite3.IntegrityError:
+    print("Device already exists in the database.")
+finally:
+    conn.close()

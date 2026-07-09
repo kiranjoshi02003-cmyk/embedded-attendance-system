@@ -1,0 +1,18 @@
+BIO-SYNC PROJECT: ESP32 R503 FINGERPRINT SENSOR & LCD PINOUT
+
+1. POWER SUPPLY:
+   - ESP32 VIN/5V pin  -> R503 Red wire (VCC)
+   - ESP32 GND pin      -> R503 Black wire (GND)
+
+2. FINGERPRINT SENSOR (UART COMMUNICATION):
+   - ESP32 GPIO 16 (RX2) -> R503 White wire (TX)
+   - ESP32 GPIO 17 (TX2) -> R503 Blue wire (RX)
+   *Note: Ensure common ground between ESP32 and Sensor.*
+
+3. LCD DISPLAY (I2C COMMUNICATION):
+   - ESP32 GPIO 21 (SDA) -> LCD SDA pin
+   - ESP32 GPIO 22 (SCL) -> LCD SCL pin
+   - ESP32 5V pin        -> LCD VCC pin
+   - ESP32 GND pin       -> LCD GND pin
+
+SYSTEM ARCHITECTURE DIAGRAM:

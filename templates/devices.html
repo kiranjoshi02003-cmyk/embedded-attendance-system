@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold text-dark">Device Nodes</h2>
+        <p class="text-muted mb-0">Monitor and manage connected ESP32 hardware</p>
+    </div>
+    <button class="btn btn-success shadow-sm">
+        <i class="fa-solid fa-plus me-1"></i> Register New Device
+    </button>
+</div>
+
+<div class="card border-0 shadow-sm bg-white">
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Node ID</th>
+                        <th>MAC Address</th>
+                        <th>Assigned Location</th>
+                        <th>Network Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for device in devices %}
+                    <tr>
+                        <td><strong>#{{ device.id }}</strong></td>
+                        <td><code class="text-secondary bg-light px-2 py-1 rounded">{{ device.mac_address }}</code></td>
+                        <td>{{ device.location or 'Unassigned' }}</td>
+                        <td>
+                            {% if device.status == 'online' %}
+                                <span class="badge bg-success"><i class="fa-solid fa-wifi me-1"></i>Online</span>
+                            {% else %}
+                                <span class="badge bg-secondary"><i class="fa-solid fa-link-slash me-1"></i>Offline</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-gear"></i> Configure</button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">No edge devices have been registered yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

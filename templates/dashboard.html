@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block content %}
+<div id="dashboard-view">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark">System Command Dashboard</h2>
+            <p class="text-muted mb-0">Real-time edge metrics and processing verification</p>
+        </div>
+        <button class="btn btn-outline-success btn-sm bg-white shadow-sm" onclick="fetchDashboardData()">
+            <i class="fa-solid fa-arrows-rotate me-1"></i> Refresh Node Data
+        </button>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card stat-card bg-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted text-uppercase mb-1 small fw-bold">Total Enrolled</h6>
+                        <h3 class="fw-bold m-0" id="stat-total-students">0</h3>
+                    </div>
+                    <div class="p-3 bg-light rounded-circle"><i class="fa-solid fa-id-card text-primary fa-xl"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card stat-card bg-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted text-uppercase mb-1 small fw-bold">Present Today</h6>
+                        <h3 class="fw-bold m-0 text-success" id="stat-present">0</h3>
+                    </div>
+                    <div class="p-3 bg-light rounded-circle"><i class="fa-solid fa-circle-check text-success fa-xl"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card stat-card bg-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted text-uppercase mb-1 small fw-bold">Absent Today</h6>
+                        <h3 class="fw-bold m-0 text-danger" id="stat-absent">0</h3>
+                    </div>
+                    <div class="p-3 bg-light rounded-circle"><i class="fa-solid fa-circle-xmark text-danger fa-xl"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card stat-card bg-white p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted text-uppercase mb-1 small fw-bold">System Status</h6>
+                        <h3 class="fw-bold m-0 text-success" id="stat-sync-rate">Online</h3>
+                    </div>
+                    <div class="p-3 bg-light rounded-circle"><i class="fa-solid fa-microchip text-success fa-xl"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card border-0 p-4 shadow-sm h-100 bg-white stat-card">
+                <h5 class="fw-bold mb-4">Today's Attendance Ratio</h5>
+                <div class="d-flex justify-content-between mb-1 small fw-bold text-muted">
+                    <span>Present</span>
+                    <span id="ratio-text">0%</span>
+                </div>
+                <div class="progress" style="height: 25px; border-radius: 8px;">
+                    <div id="ratio-bar" class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                </div>
+                <p class="text-muted small mt-3"><i class="fa-solid fa-circle-info me-1"></i> Live ratio of students marked present vs total enrolled.</p>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card border-0 p-4 shadow-sm h-100 bg-white stat-card">
+                <h5 class="fw-bold mb-3">System Hardware Status</h5>
+                <ul class="list-group list-group-flush border-0">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
+                        <span><i class="fa-solid fa-server me-2 text-primary"></i> Edge Node Connection</span>
+                        <span class="badge bg-success rounded-pill">Active</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
+                        <span><i class="fa-solid fa-database me-2 text-warning"></i> Database Sync</span>
+                        <span class="badge bg-success rounded-pill">Synchronized</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
+                        <span><i class="fa-solid fa-shield-halved me-2 text-danger"></i> JWT Security</span>
+                        <span class="badge bg-success rounded-pill">Secured</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm bg-white stat-card">
+        <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold m-0"><i class="fa-solid fa-bolt text-warning me-2"></i>Live Verification Feed</h5>
+            <span class="badge bg-success" id="stream-status">Polling Active</span>
+        </div>
+        <div class="table-responsive px-4 pb-3">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Roll Number</th>
+                        <th>Student Name</th>
+                        <th>Department</th>
+                        <th>Verified Stamp</th>
+                        <th>Edge Node MAC</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="live-attendance-feed">
+                    <tr><td colspan="6" class="text-center text-muted py-3">Loading live data...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
